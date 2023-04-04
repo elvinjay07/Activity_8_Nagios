@@ -1,0 +1,30 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: Update Ubuntu OS
+    tags: always
+    apt:
+      update_cache: yes
+    changed_when: false
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Update Repository for CentOS
+    tags: always
+    dnf:
+      update_cache: yes
+    changed_when: false
+    when: ansible_distribution == "CentOS"
+
+- hosts: CentOS
+  become: true
+  roles:
+    - CentOS
+
+- hosts: Ubuntu
+  become: true
+  roles:
+    - Ubuntu
+

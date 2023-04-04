@@ -1,0 +1,24 @@
+---
+  - name: Installing Nagios in Ubuntu OS
+    apt:
+      name: 
+        - nagios4
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Installing Nagios in CentOS
+    dnf:
+      name: 
+        - nagios
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: Enable httpd
+    service:
+      name: httpd
+      state: restarted
+      enabled: true
+    when: ansible_distribution == "CentOS"
+
